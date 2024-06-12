@@ -14,20 +14,7 @@ const Home = () => {
         </Typography>
       </div>
       <div className='findLift'>
-        {isLoading &&
-        <div style={{height:"100%", width:"100%", display:"flex", flexDirection:"column", justifyContent:'center', alignContent:'center', alignItems:'center'}}>
-         <CircularProgress style={{flex:1}} />
-         <div style={{flex:5}}>
-            <Typography variant="h5">Loading...</Typography>
-            <Typography variant="body1">Please wait while the Lift Finder is loading.</Typography>
-            <Typography variant="body1">If this is taking too long</Typography>
-            <Typography variant="body1">you can go to https://lift-finder.netlify.app/.</Typography>
-             
-
-         </div>
-         </div>
-         
-         }
+       
          
           {/* Show loading spinner while iframe is loading */}
        {
