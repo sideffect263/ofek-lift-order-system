@@ -1,24 +1,54 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography } from '@mui/material';
+import React, { useEffect, useState, useContext } from 'react';
+import { Container, TextField, Button, Typography, List, ListItem, ListItemText } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { CartContext } from '../components/CartContext';
 
 const Order = () => {
   const [customerName, setCustomerName] = useState('');
   const [contact, setContact] = useState('');
   const [orderDate, setOrderDate] = useState('');
   const [orderStatus, setOrderStatus] = useState(null);
+  const { productsCartContext } = useContext(CartContext);
 
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const productId = params.get('product');
 
-  const handleOrderSubmit = () => {
-    // Handle order submission logic
-    axios.post('/path-to-your-api/orders', { productId, customerName, contact, orderDate })
-      .then(response => setOrderStatus('Order placed successfully!'))
-      .catch(error => setOrderStatus('Error placing order. Please try again.'));
+  useEffect(() => {
+    console.log("Order load");
+    console.log(productsCartContext);
+  }, [productsCartContext]);
+
+  const handleSubmitOrder = () => {
+    // Handle order submission logic here
+    // Example: Send order data to your API
+    axios.post('/path-to-your-api/orders', {
+      customerName,
+      contact,
+      orderDate,
+      products: productsCartContext
+    })
+    .then(response => {
+      setOrderStatus('Order submitted successfully!');
+      console.log('Order response:', response.data);
+    })
+    .catch(error => {
+      setOrderStatus('Error submitting order.');
+      console.error('Error submitting order:', error);
+    });
   };
+
+  const renderOrderSummary = () => (
+    <List>
+      {productsCartContext.map((product, index) => (
+        <ListItem key={index}>
+          <ListItemText
+            primary={product.name}
+            secondary={`Quantity: ${product.quantity}, Start Date: ${product.startDate ? new Date(product.startDate).toLocaleDateString() : 'N/A'}, End Date: ${product.endDate ? new Date(product.endDate).toLocaleDateString() : 'N/A'}, Location: ${product.location}`}
+          />
+        </ListItem>
+      ))}
+    </List>
+  );
 
   return (
     <Container>
@@ -46,7 +76,9 @@ const Order = () => {
         margin="normal"
         InputLabelProps={{ shrink: true }}
       />
-      <Button variant="contained" color="primary" onClick={handleOrderSubmit}>
+      <Typography variant="h5" gutterBottom>Order Summary</Typography>
+      {renderOrderSummary()}
+      <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
         Submit Order
       </Button>
       {orderStatus && <Typography variant="body1">{orderStatus}</Typography>}

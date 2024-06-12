@@ -1,8 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from './CartContext';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const cart = useContext(CartContext);
+
+  const homePressed = () => {
+    navigate('/');
+  };
+
+  const productsPressed = () => {
+    navigate('/products');
+  }
+
+  const orderPressed = () => {
+    navigate('/order');
+  }
+
+
+
   return (
     <AppBar style={{marginTop:25, width:"95%", borderRadius:20, flex:1}} position="static">
       <Toolbar style={{
@@ -20,13 +38,13 @@ const Header = () => {
       
         </div>
         <div style={{flex:2, borderWidth:2, display:"flex", justifyContent:'flex-end'}}>
-        <Button className='headerButton' color="inherit" component={Link} to="/">
+        <Button className='headerButton' color="inherit" onClick={homePressed}>
         <Typography variant="h6" style={{color:"white"}}>Home</Typography>
         </Button>
-        <Button className='headerButton' color="inherit" component={Link} to="/products">
+        <Button className='headerButton' color="inherit" onClick={productsPressed} >
         <Typography variant="h6" style={{color:"white"}}>Products</Typography>
         </Button>
-        <Button className='headerButton' color="inherit" component={Link} to="/order">
+        <Button className='headerButton' color="inherit" onClick={orderPressed} >
         <Typography variant="h6" style={{color:"white"}}>Order</Typography>
         </Button>
         </div>

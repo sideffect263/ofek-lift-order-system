@@ -1,9 +1,6 @@
 .main{
     min-height: 1000px;
     flex: 1;
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
     flex-direction: column;
     width:100% ;
 }
@@ -17,8 +14,8 @@
 
 .findLift{
     flex: 3;
-    border-width: 2px;
-    border-color: black;
+    border-width: 1px;
+    border-color: grey;
     border-style: solid;
     width: 100%;
     display: flex;
