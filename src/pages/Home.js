@@ -30,7 +30,7 @@ const Home = () => {
          }
          
           {/* Show loading spinner while iframe is loading */}
-       {!isLoading &&
+       {
         <iframe 
           title="findLift"
           src="https://lift-finder.netlify.app/"

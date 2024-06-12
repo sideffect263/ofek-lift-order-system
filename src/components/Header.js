@@ -20,13 +20,13 @@ const Header = () => {
       
         </div>
         <div style={{flex:2, borderWidth:2, display:"flex", justifyContent:'flex-end'}}>
-        <Button color="inherit" component={Link} to="/">
+        <Button className='headerButton' color="inherit" component={Link} to="/">
         <Typography variant="h6" style={{color:"white"}}>Home</Typography>
         </Button>
-        <Button color="inherit" component={Link} to="/products">
+        <Button className='headerButton' color="inherit" component={Link} to="/products">
         <Typography variant="h6" style={{color:"white"}}>Products</Typography>
         </Button>
-        <Button color="inherit" component={Link} to="/order">
+        <Button className='headerButton' color="inherit" component={Link} to="/order">
         <Typography variant="h6" style={{color:"white"}}>Order</Typography>
         </Button>
         </div>

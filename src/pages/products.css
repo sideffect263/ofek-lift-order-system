@@ -1,0 +1,16 @@
+.date-picker input{
+    text-align: center;
+}
+
+.date-picker{
+    background-color:ghostwhite;
+    text-align: center;
+    border-radius: 4px;
+    border-color:lightgray;
+}
+
+
+.date-picker:focus{
+    border-color: "lightblue";
+}
+
