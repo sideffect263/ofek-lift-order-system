@@ -21,9 +21,14 @@ const Home = () => {
         <iframe 
           title="findLift"
           src="https://lift-finder.netlify.app/"
-          style={{width: '100%', height: '100vh'}}
+          style={{width: '100%', height: '100vh', borderRadius:10, borderWidth:2, borderColor:'grey', boxShadow:20, borderStyle:'solid', marginTop: 25}}
           allowTransparency="true"
-          onLoad={() => setIsLoading(false)} // Set loading to false when iframe has loaded
+          onLoad={() => setIsLoading(false)}
+          
+           loading='lazy'
+           prefix='https://lift-finder.netlify.app/'
+           
+
         />
        }
       </div>

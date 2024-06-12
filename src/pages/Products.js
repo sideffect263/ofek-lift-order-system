@@ -95,6 +95,7 @@ const Products = () => {
 
   const handleRemoveFromCart = (index) => {
     setCart(cart.filter((_, i) => i !== index));
+    setProductsCartContext(productsCartContext.filter((_, i) => i !== index));
   };
 
   const calculateDuration = () => {

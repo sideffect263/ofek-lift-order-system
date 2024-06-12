@@ -3,6 +3,8 @@ import { Container, TextField, Button, Typography, List, ListItem, ListItemText 
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { CartContext } from '../components/CartContext';
+import emailjs from 'emailjs-com';
+
 
 const Order = () => {
   const [customerName, setCustomerName] = useState('');
@@ -11,32 +13,30 @@ const Order = () => {
   const [orderStatus, setOrderStatus] = useState(null);
   const { productsCartContext } = useContext(CartContext);
 
-  const location = useLocation();
+  const handleSubmitOrder = () => {
+    const templateParams = {
+      to_name: "ariel",
+      to_email: ["arielbiton03@gmail.com"],
+      message: `Order Details: ${JSON.stringify(productsCartContext)}`,
+      // Add more parameters based on your template setup
+    };
+  
+    emailjs.send('service_tna4jyq', 'template_tnxjp0c', templateParams, '4STl-GlRs-mGNGOoK')
+      .then(response => {
+        console.log('Email successfully sent!', response.status, response.text);
+        setOrderStatus('Order submitted and email sent successfully!');
+      }, (err) => {
+        console.error('Failed to send email. Error: ', err);
+        setOrderStatus('Failed to send email.');
+      });
+  };
 
   useEffect(() => {
     console.log("Order load");
     console.log(productsCartContext);
   }, [productsCartContext]);
 
-  const handleSubmitOrder = () => {
-    // Handle order submission logic here
-    // Example: Send order data to your API
-    axios.post('/path-to-your-api/orders', {
-      customerName,
-      contact,
-      orderDate,
-      products: productsCartContext
-    })
-    .then(response => {
-      setOrderStatus('Order submitted successfully!');
-      console.log('Order response:', response.data);
-    })
-    .catch(error => {
-      setOrderStatus('Error submitting order.');
-      console.error('Error submitting order:', error);
-    });
-  };
-
+  
   const renderOrderSummary = () => (
     <List>
       {productsCartContext.map((product, index) => (
@@ -51,7 +51,7 @@ const Order = () => {
   );
 
   return (
-    <Container>
+    <Container style={{marginTop:20}}>
       <Typography variant="h4" gutterBottom>Place an Order</Typography>
       <TextField
         label="Customer Name"

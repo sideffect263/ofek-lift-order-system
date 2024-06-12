@@ -13,10 +13,8 @@
 }
 
 .findLift{
-    flex: 3;
-    border-width: 1px;
-    border-color: grey;
-    border-style: solid;
+    flex: 5;
+
     width: 100%;
     display: flex;
 }

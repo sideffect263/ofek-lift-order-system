@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
+import Banner from './components/Banner';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Order from './pages/Order';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/order" element={<Order />} />
         </Routes>
+        <Banner />
       </Router>
     </CartContext.Provider>
   );
