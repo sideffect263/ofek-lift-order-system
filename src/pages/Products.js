@@ -40,10 +40,16 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
+    const lowercasedQuery = searchQuery.toLowerCase();
     setFilteredProducts(
-      products.filter(product =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+        products.filter(product =>
+            product.name.toLowerCase().includes(lowercasedQuery) ||
+            product.vehicleType.toLowerCase().includes(lowercasedQuery) ||
+            product.engType.toLowerCase().includes(lowercasedQuery) ||
+            product.workLocation.toLowerCase().includes(lowercasedQuery) ||
+            product.brand.toLowerCase().includes(lowercasedQuery) ||
+            product.workHeight === searchQuery
+        )
     );
   }, [searchQuery, products]);
 

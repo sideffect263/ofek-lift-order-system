@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
       <CardMedia
         component="img"
         alt={product.name}
-        height="140"
+        height="250"
         image={product.image} // Ensure your product data includes image URLs
       />
       <CardContent>
