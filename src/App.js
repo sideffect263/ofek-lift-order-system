@@ -7,6 +7,8 @@ import Products from './pages/Products';
 import Order from './pages/Order';
 import { CartContext } from './components/CartContext';
 import NotFound from './pages/404';
+import { AccessibilityWidget } from 'react-accessibility'
+
 
 function App() {
 
@@ -16,6 +18,8 @@ function App() {
     <CartContext.Provider value={{ productsCartContext, setProductsCartContext }}>
       <Router>
         <Header />
+        <AccessibilityWidget />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
