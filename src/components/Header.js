@@ -34,26 +34,47 @@ const Header = () => {
 
   return (
     <>
-      <AppBar id="toolBAR" className="appBar" position="static">
-        <Toolbar  className='toolBar'>
-          <Box className="logo-container">
-            <img src="https://www.ofeklift.com/wp-content/uploads/2023/06/logo.png" alt="logo" className='img' onClick={homePressed} />
+      <AppBar className="appBar" position="static" role="banner">
+        <Toolbar className='toolBar'>
+          <Box className="logo-container" role="img" aria-label="Ofek Lift Logo">
+            <img src="https://www.ofeklift.com/wp-content/uploads/2023/06/logo.png" alt="Ofek Lift Logo" className='img' onClick={homePressed} />
           </Box>
           <Box className="menu-button-container">
-            <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)} className="menu-button">
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+              className="menu-button"
+              aria-controls="menu-drawer"
+              aria-expanded={drawerOpen}
+              aria-haspopup="true"
+            >
               <MenuIcon />
             </IconButton>
           </Box>
           <Box className="buttons-container">
             {menuItems.map((item, index) => (
-              <Button key={index} className='headerButton' color="inherit" onClick={item.onClick}>
+              <Button
+                key={index}
+                className='headerButton'
+                color="inherit"
+                onClick={item.onClick}
+                aria-label={item.text}
+              >
                 <Typography variant="h6" className="buttonText">{item.text}</Typography>
               </Button>
             ))}
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+        role="navigation"
+        id="menu-drawer"
+      >
         <List>
           {menuItems.map((item, index) => (
             <ListItem button key={index} onClick={item.onClick}>

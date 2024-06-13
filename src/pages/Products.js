@@ -113,6 +113,7 @@ const Products = () => {
         margin="normal"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        inputProps={{ role: 'searchbox' }}
       />
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
         {tags.map((tag, index) => (
@@ -123,8 +124,7 @@ const Products = () => {
             sx={{ cursor: 'pointer' }}
             color="primary"
             variant="outlined"
-            style={{fontSize: '1.1rem'}}
-
+            style={{ fontSize: '1.1rem' }}
           />
         ))}
       </Box>
@@ -144,18 +144,20 @@ const Products = () => {
         open={dialogOpen}
         TransitionComponent={Slide}
         onClose={handleCloseDialog}
+        aria-labelledby="product-dialog-title"
       >
-        <DialogTitle>{selectedProduct?.name}</DialogTitle>
+        <DialogTitle id="product-dialog-title">{selectedProduct?.name}</DialogTitle>
         <DialogContent>
           {selectedProduct && (
             <>
               <img src={selectedProduct.image} alt={selectedProduct.name} style={{ width: '100%' }} />
-              <p>{selectedProduct.description}</p>
-              <p>Price: ${selectedProduct.price}</p>
+              <Typography variant="body1" component="p">{selectedProduct.description}</Typography>
+              <Typography variant="h6" component="p">Price: ${selectedProduct.price}</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-                  <label>Start Date:</label>
+                  <label htmlFor="start-date">Start Date:</label>
                   <DatePicker
+                    id="start-date"
                     selected={startDate}
                     onChange={(date) => {
                       setStartDate(date);
@@ -165,19 +167,22 @@ const Products = () => {
                     }}
                     dateFormat="dd/MM/yyyy"
                     className="date-picker"
+                    placeholderText="Select start date"
                   />
                 </Box>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-                  <label>End Date:</label>
+                  <label htmlFor="end-date">End Date:</label>
                   <DatePicker
+                    id="end-date"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     className="date-picker"
+                    placeholderText="Select end date"
                   />
                 </Box>
-                <label>Duration: <span style={{ color: "green" }}>{calculateDuration()}</span> days</label>
+                <Typography variant="body1" component="span">Duration: <span style={{ color: "green" }}>{calculateDuration()}</span> days</Typography>
                 <FormControl fullWidth margin="normal" variant="outlined">
                   <InputLabel id="location-label">Location</InputLabel>
                   <Select
@@ -199,7 +204,7 @@ const Products = () => {
                   onChange={(e) => setQuantity(e.target.value)}
                   fullWidth
                   margin="normal"
-                  inputProps={{ min: 1 }}
+                  inputProps={{ min: 1, role: 'spinbutton' }}
                 />
               </Box>
             </>
@@ -214,9 +219,9 @@ const Products = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)} aria-labelledby="shopping-cart-drawer">
         <Box sx={{ width: 300, padding: 2 }}>
-          <Typography variant="h6">Shopping Cart</Typography>
+          <Typography variant="h6" id="shopping-cart-drawer">Shopping Cart</Typography>
           <List>
             {productsCartContext.map((item, index) => (
               <ListItem key={index} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>

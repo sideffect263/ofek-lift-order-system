@@ -51,7 +51,7 @@ const Order = () => {
   );
 
   return (
-    <Container style={{marginTop:20}}>
+    <Container style={{marginTop:20, marginBottom:40}}>
       <Typography variant="h4" gutterBottom>Place an Order</Typography>
       <TextField
         label="Customer Name"
