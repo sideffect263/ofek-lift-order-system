@@ -1,0 +1,53 @@
+
+
+
+#hamburger {
+    display: none;
+}
+
+.img{
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+    border-width: 2px;
+    box-shadow: '0 0 50px 10px rgba(0,0,0,0.4)' ;
+    padding: 10px;
+
+}
+
+.toolBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Buttons {
+    display: flex;
+    flex: 4;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+
+@media (max-width: 555px) {
+    #hamburger {
+        display: flex;
+        width: 100%;
+    }
+    
+    .toolBar{
+        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+    }
+    .Buttons{
+        display: none;
+    }
+}

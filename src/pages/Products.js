@@ -9,8 +9,9 @@ import './products.css';
 import DeleteIcon from '../assets/icons/remove.png';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../components/CartContext';
-import { add } from 'date-fns';
 import VData from '../components/VData';
+import { Chip } from '@mui/material';
+
 
 
 const Products = () => {
@@ -27,6 +28,7 @@ const Products = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const { productsCartContext, setProductsCartContext } = useContext(CartContext);
+  const tags = ["זרוע טלסקופית ישרה", "Genie", "JLG", "ממונע", "חשמלי","פתוח", "שטח מפולס ישר", "זרוע מפרקית", "Manitou","מייצבים","אנכית"];
 
 
   useEffect(() => {
@@ -121,6 +123,19 @@ const Products = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
+  {tags.map((tag, index) => (
+    <Chip
+      key={index}
+      label={tag}
+      onClick={() => setSearchQuery(tag)}
+      style={{ cursor: 'pointer' }}
+      color="primary"
+      variant="outlined"
+    />
+  ))}
+</div>
+
       <IconButton onClick={toggleDrawer(true)}>
         <img src={ShoppingCartIcon} alt="Shopping Cart" style={{ width: 60, backgroundColor:'#264653', borderRadius:20, zIndex:3, position:"fixed", right:50, top:180 }} />
       </IconButton>
