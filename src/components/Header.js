@@ -29,7 +29,8 @@ const Header = () => {
   const menuItems = [
     { text: 'Home', onClick: homePressed },
     { text: 'Products', onClick: productsPressed },
-    { text: 'Order', onClick: orderPressed }
+    { text: 'Order', onClick: orderPressed },
+    {text: 'Lift Game', onClick: () => navigate('/lift-game')},
   ];
 
   return (

@@ -8,7 +8,7 @@ const Banner = () => {
         position: 'static',   // Fix position to the viewport
         bottom: '0',         // Align to the bottom of the viewport
         width: '100%',       // Ensure it spans the full width
-        backgroundColor: 'orange', // Background color
+        backgroundColor: '#f4a261', // Background color
         color: 'white',      // Text color
         textAlign: 'center', // Center-align the text
         padding: '10px 0',   // Padding top and bottom

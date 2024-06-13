@@ -5,6 +5,7 @@ import Banner from './components/Banner';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Order from './pages/Order';
+import LiftGameScreen from './pages/LiftGameScreen';
 import { CartContext } from './components/CartContext';
 import NotFound from './pages/404';
 import { AccessibilityWidget } from 'react-accessibility'
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/order" element={<Order />} />
+          <Route path="/lift-game" element={<LiftGameScreen />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Banner />

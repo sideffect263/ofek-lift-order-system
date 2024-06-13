@@ -168,6 +168,7 @@ const Products = () => {
                     dateFormat="dd/MM/yyyy"
                     className="date-picker"
                     placeholderText="Select start date"
+                    
                   />
                 </Box>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
