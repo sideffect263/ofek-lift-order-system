@@ -10,32 +10,11 @@ import DeleteIcon from '../assets/icons/remove.png';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../components/CartContext';
 import { add } from 'date-fns';
+import VData from '../components/VData';
 
 
 const Products = () => {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: 'Product 1',
-      description: 'This is a description of product 1',
-      price: 100,
-      image: 'https://via.placeholder.com/300',
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      description: 'This is a description of product 2',
-      price: 200,
-      image: 'https://via.placeholder.com/300',
-    },
-    {
-      id: 3,
-      name: 'Product 3',
-      description: 'This is a description of product 3',
-      price: 300,
-      image: 'https://via.placeholder.com/300',
-    },
-  ]);
+  const [products, setProducts] = useState(VData);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
