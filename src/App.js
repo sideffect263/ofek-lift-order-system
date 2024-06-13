@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import Order from './pages/Order';
 import { CartContext } from './components/CartContext';
+import NotFound from './pages/404';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/order" element={<Order />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Banner />
       </Router>

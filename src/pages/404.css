@@ -1,0 +1,42 @@
+/* Style for the 404 container */
+#not-found-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f0f0f0;
+  }
+  
+  /* Style for the 404 title */
+  #not-found-title {
+    font-size: 6rem;
+    color: #264653; /* Using the same color as in previous styles */
+    margin: 0;
+  }
+  
+  /* Style for the 404 message */
+  #not-found-message {
+    font-size: 1.5rem;
+    color: #2a9d8f; /* Complementary color used in the theme */
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  
+  /* Style for the button */
+  #not-found-button {
+    background-color: #e76f51; /* Accent color from previous styles */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #not-found-button:hover {
+    background-color: #d63d2e; /* Darker shade of the accent color */
+  }
+  
