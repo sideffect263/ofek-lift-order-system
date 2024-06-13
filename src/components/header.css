@@ -1,53 +1,65 @@
 
-
-
-#hamburger {
-    display: none;
-}
-
-.img{
-    width: 100%;
-    height: 100px;
-    background-color: white;
-    border-radius: 20px;
-    margin: 10px;
+  
+  .toolBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-container {
+    flex: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
-    border-width: 2px;
-    box-shadow: '0 0 50px 10px rgba(0,0,0,0.4)' ;
-    padding: 10px;
-
-}
-
-.toolBar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.Buttons {
-    display: flex;
-    flex: 4;
-    justify-content: flex-end;
+  }
+  
+  .img {
+    cursor: pointer;
     width: 100%;
-}
-
-
-@media (max-width: 555px) {
-    #hamburger {
-        display: flex;
-        width: 100%;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  .menu-button-container {
+    display: none;
+  }
+  
+  .buttons-container {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  
+  .headerButton {
+    color: white;
+  }
+  
+  .buttonText {
+    color: white;
+  }
+  
+  @media (max-width: 555px) {
+    .buttons-container {
+      display: none;
     }
-    
+    .menu-button-container {
+      display: flex;
+    }
     .toolBar{
         flex-direction: column;
-        display: flex;
         justify-content: space-between;
-        align-items: center;
-        align-content: center;
-        justify-items: center;
     }
-    .Buttons{
-        display: none;
-    }
-}
+  }
+  
+
+
+
+
+  #toolBAR{
+    margin-top: 25px;
+    width: 93%;
+    border-radius: 10px;
+  }

@@ -1,24 +1,49 @@
-.main{
-    min-height: 1000px;
-    flex: 1;
-    flex-direction: column;
-    width:100% ;
-}
-
-.openMessage{
-    flex: 1;
+.main {
     display: flex;
     flex-direction: column;
-    width: 100%;
-}
-
-.findLift{
-    flex: 5;
-
+    align-items: center;
+    margin-top: 25px;
+  }
+  
+  .openMessage {
+    text-align: center;
+    margin-top: 25px;
+  }
+  
+  .welcomeText {
+    margin-top: 25px;
+  }
+  
+  .descriptionText {
+    margin-top: 25px;
+  }
+  
+  .findLift {
+    position: relative;
     width: 100%;
     display: flex;
-}
-
-#mainly{
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+  }
+  
+  .loadingSpinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-}
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .iframeStyle {
+    width: 100%;
+    height: 100vh;
+    border-radius: 10px;
+    border: 2px solid grey;
+    box-shadow: 20px 20px 20px grey;
+    margin-bottom: 5%;
+  }
+  

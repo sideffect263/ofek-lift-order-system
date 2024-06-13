@@ -1,5 +1,10 @@
-import React, { useEffect, useState,useContext } from 'react';
-import { Container, Grid, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button, Slide, Select, MenuItem, FormControl, InputLabel, Drawer, IconButton, List, ListItem, ListItemText, ListItemSecondaryAction } from '@mui/material';
+import React, { useEffect, useState, useContext } from 'react';
+import {
+  Container, Grid, TextField, Dialog, DialogTitle, DialogContent,
+  DialogActions, Button, Slide, Select, MenuItem, FormControl,
+  InputLabel, Drawer, IconButton, List, ListItem, ListItemText,
+  ListItemSecondaryAction, Box, Chip, Typography
+} from '@mui/material';
 import ShoppingCartIcon from '../assets/icons/shoppingCart_icon.png';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,9 +15,6 @@ import DeleteIcon from '../assets/icons/remove.png';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../components/CartContext';
 import VData from '../components/VData';
-import { Chip } from '@mui/material';
-
-
 
 const Products = () => {
   const [products, setProducts] = useState(VData);
@@ -28,11 +30,9 @@ const Products = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const { productsCartContext, setProductsCartContext } = useContext(CartContext);
-  const tags = ["זרוע טלסקופית ישרה", "Genie", "JLG", "ממונע", "חשמלי","פתוח", "שטח מפולס ישר", "זרוע מפרקית", "Manitou","מייצבים","אנכית"];
-
+  const tags = ["זרוע טלסקופית ישרה", "Genie", "JLG", "ממונע", "חשמלי", "פתוח", "שטח מפולס ישר", "זרוע מפרקית", "Manitou", "מייצבים", "אנכית"];
 
   useEffect(() => {
-    // Fetch product data from your API or Firebase
     axios.get('/path-to-your-api/products')
       .then(response => {
         setProducts(response.data);
@@ -44,28 +44,20 @@ const Products = () => {
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     setFilteredProducts(
-        products.filter(product =>
-            product.name.toLowerCase().includes(lowercasedQuery) ||
-            product.vehicleType.toLowerCase().includes(lowercasedQuery) ||
-            product.engType.toLowerCase().includes(lowercasedQuery) ||
-            product.workLocation.toLowerCase().includes(lowercasedQuery) ||
-            product.brand.toLowerCase().includes(lowercasedQuery) ||
-            product.workHeight === searchQuery
-        )
+      products.filter(product =>
+        product.name.toLowerCase().includes(lowercasedQuery) ||
+        product.vehicleType.toLowerCase().includes(lowercasedQuery) ||
+        product.engType.toLowerCase().includes(lowercasedQuery) ||
+        product.workLocation.toLowerCase().includes(lowercasedQuery) ||
+        product.brand.toLowerCase().includes(lowercasedQuery) ||
+        product.workHeight === searchQuery
+      )
     );
   }, [searchQuery, products]);
 
-
   const addToCart = (product) => {
-    setProductsCartContext([...cart, product]);
-    console.log("productsCartContext",productsCartContext)
-
+    setProductsCartContext([...productsCartContext, product]);
   };
-
-  useEffect(() => {
-    console.log("cart",cart)
-    console.log("productsCartContext",productsCartContext)
-  }, [cart]);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -88,8 +80,7 @@ const Products = () => {
   const calculateDuration = () => {
     if (!startDate || !endDate) return null;
     const diffTime = Math.abs(endDate - startDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
   const handleAddToCart = () => {
@@ -123,21 +114,22 @@ const Products = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
-  {tags.map((tag, index) => (
-    <Chip
-      key={index}
-      label={tag}
-      onClick={() => setSearchQuery(tag)}
-      style={{ cursor: 'pointer' }}
-      color="primary"
-      variant="outlined"
-    />
-  ))}
-</div>
+      <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
+        {tags.map((tag, index) => (
+          <Chip
+            key={index}
+            label={tag}
+            onClick={() => setSearchQuery(tag)}
+            sx={{ cursor: 'pointer' }}
+            color="primary"
+            variant="outlined"
+            style={{fontSize: '1.1rem'}}
 
+          />
+        ))}
+      </Box>
       <IconButton onClick={toggleDrawer(true)}>
-        <img src={ShoppingCartIcon} alt="Shopping Cart" style={{ width: 60, backgroundColor:'#264653', borderRadius:20, zIndex:3, position:"fixed", right:50, top:180 }} />
+        <img src={ShoppingCartIcon} alt="Shopping Cart" className="shopping-cart-icon" />
       </IconButton>
       <Grid container spacing={3} justifyContent="center">
         {filteredProducts.map(product => (
@@ -160,8 +152,8 @@ const Products = () => {
               <img src={selectedProduct.image} alt={selectedProduct.name} style={{ width: '100%' }} />
               <p>{selectedProduct.description}</p>
               <p>Price: ${selectedProduct.price}</p>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                   <label>Start Date:</label>
                   <DatePicker
                     selected={startDate}
@@ -174,8 +166,8 @@ const Products = () => {
                     dateFormat="dd/MM/yyyy"
                     className="date-picker"
                   />
-                </div>
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                </Box>
+                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                   <label>End Date:</label>
                   <DatePicker
                     selected={endDate}
@@ -184,8 +176,8 @@ const Products = () => {
                     dateFormat="dd/MM/yyyy"
                     className="date-picker"
                   />
-                </div>
-                <label>Duration: <span style={{color:"green"}}>{calculateDuration()}</span> days</label>
+                </Box>
+                <label>Duration: <span style={{ color: "green" }}>{calculateDuration()}</span> days</label>
                 <FormControl fullWidth margin="normal" variant="outlined">
                   <InputLabel id="location-label">Location</InputLabel>
                   <Select
@@ -209,7 +201,7 @@ const Products = () => {
                   margin="normal"
                   inputProps={{ min: 1 }}
                 />
-              </div>
+              </Box>
             </>
           )}
         </DialogContent>
@@ -223,24 +215,25 @@ const Products = () => {
         </DialogActions>
       </Dialog>
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <div style={{ width: 250, padding: 16 }}>
-          <h3>Shopping Cart</h3>
+        <Box sx={{ width: 300, padding: 2 }}>
+          <Typography variant="h6">Shopping Cart</Typography>
           <List>
             {productsCartContext.map((item, index) => (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={item.name}
-                  secondary={`Quantity: ${item.quantity}, Start Date: ${item.startDate ? item.startDate.toLocaleDateString() : 'N/A'}, End Date: ${item.endDate ? item.endDate.toLocaleDateString() : 'N/A'}, Location: ${item.location}`}
-                />
-                <ListItemSecondaryAction>
+              <ListItem key={index} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                  <Typography variant="subtitle1">{item.name}</Typography>
                   <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveFromCart(index)}>
                     <img src={DeleteIcon} alt="Remove" style={{ width: 24 }} />
                   </IconButton>
-                </ListItemSecondaryAction>
+                </Box>
+                <Typography variant="body2">Quantity: {item.quantity}</Typography>
+                <Typography variant="body2">Start Date: {item.startDate ? item.startDate.toLocaleDateString() : 'N/A'}</Typography>
+                <Typography variant="body2">End Date: {item.endDate ? item.endDate.toLocaleDateString() : 'N/A'}</Typography>
+                <Typography variant="body2">Location: {item.location}</Typography>
               </ListItem>
             ))}
           </List>
-        </div>
+        </Box>
       </Drawer>
     </Container>
   );
