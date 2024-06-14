@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { CartContext } from '../components/CartContext';
 import emailjs from 'emailjs-com';
-
+import { Helmet } from 'react-helmet';
 
 const Order = () => {
   const [customerName, setCustomerName] = useState('');
@@ -52,6 +52,12 @@ const Order = () => {
 
   return (
     <Container style={{marginTop:20, marginBottom:40}}>
+       <Helmet>
+        <title>Order - Send and email</title>
+        <meta name="description" content="
+        Place an order with Ofek Lift today. Explore our product range and place your orders efficiently. 
+        " />
+      </Helmet>
       <Typography variant="h4" gutterBottom>Place an Order</Typography>
       <TextField
         label="Customer Name"

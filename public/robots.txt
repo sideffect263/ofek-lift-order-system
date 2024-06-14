@@ -1,3 +1,16 @@
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Disallow: /private/
+Disallow: /temp/
+Disallow: /api/
+
+# Allow crawlers to access these public folders
+Allow: /public/
+Allow: /images/
+Allow: /src/
+Allow: /css/
+Allow: /js/
+
+# Specify the location of your sitemap
+Sitemap: https://www.ofek-lift-order.onrender.com/sitemap.xml

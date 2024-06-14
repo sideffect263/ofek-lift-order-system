@@ -15,6 +15,7 @@ import DeleteIcon from '../assets/icons/remove.png';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../components/CartContext';
 import VData from '../components/VData';
+import { Helmet } from 'react-helmet';
 
 const Products = () => {
   const [products, setProducts] = useState(VData);
@@ -32,14 +33,6 @@ const Products = () => {
   const { productsCartContext, setProductsCartContext } = useContext(CartContext);
   const tags = ["זרוע טלסקופית ישרה", "Genie", "JLG", "ממונע", "חשמלי", "פתוח", "שטח מפולס ישר", "זרוע מפרקית", "Manitou", "מייצבים", "אנכית"];
 
-  useEffect(() => {
-    axios.get('/path-to-your-api/products')
-      .then(response => {
-        setProducts(response.data);
-        setFilteredProducts(response.data);
-      })
-      .catch(error => console.error('Error fetching products:', error));
-  }, []);
 
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
@@ -106,6 +99,10 @@ const Products = () => {
 
   return (
     <Container>
+       <Helmet>
+        <title>Products - Ofek Lift Rentals</title>
+        <meta name="description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts." />
+      </Helmet>
       <TextField
         label="Search Products"
         variant="outlined"
@@ -225,7 +222,7 @@ const Products = () => {
           <Typography variant="h6" id="shopping-cart-drawer">Shopping Cart</Typography>
           <List>
             {productsCartContext.map((item, index) => (
-              <ListItem key={index} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+              <ListItem key={item.name} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                   <Typography variant="subtitle1">{item.name}</Typography>
                   <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveFromCart(index)}>
