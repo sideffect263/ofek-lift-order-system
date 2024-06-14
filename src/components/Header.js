@@ -33,6 +33,8 @@ const Header = () => {
     {text: 'Lift Game', onClick: () => navigate('/lift-game')},
   ];
 
+  
+
   return (
     <>
       <AppBar className="appBar" position="static" role="banner">
