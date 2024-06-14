@@ -292,6 +292,7 @@ const Products = () => {
                 <Typography variant="body2">Start Date: {item.startDate ? item.startDate.toLocaleDateString() : 'N/A'}</Typography>
                 <Typography variant="body2">End Date: {item.endDate ? item.endDate.toLocaleDateString() : 'N/A'}</Typography>
                 <Typography variant="body2">Location: {item.location}</Typography>
+                <Typography variant="body2">Price-Range: {item.textPriceRange[0]} - {item.textPriceRange[1]}</Typography>
               </ListItem>
             ))}
           </List>
