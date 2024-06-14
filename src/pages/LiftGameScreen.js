@@ -18,8 +18,9 @@ const LiftGameScreen = () => {
     };
   }, []);
 
-  const switchGame = () => { // Add a function to switch games
+  const switchGame = (event) => { // Add the event parameter
     setGame(game === 'lift' ? 'boom' : 'lift');
+    event.target.blur(); // Remove focus from the button
   };
 
   return (
