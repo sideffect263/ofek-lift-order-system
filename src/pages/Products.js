@@ -92,7 +92,7 @@ const Products = () => {
      
      
     
-  }, [startDate, endDate, location, quantity, setLocation, ]);
+  }, [startDate, endDate, location, quantity, textPriceRange, ]);
 
   
 
