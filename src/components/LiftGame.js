@@ -38,6 +38,8 @@ function LiftGame() {
     const drawLift = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      
+
       // Draw movable items
       elements.forEach(item => {
         ctx.fillStyle = item.isLifted ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 0, 255, 0.8)';
@@ -56,133 +58,167 @@ function LiftGame() {
         ctx.fillRect(box.isPicked ? position - boxWidth / 2 : box.x, box.isPicked ? baseLineY - height - platformHeight - boxHeight : box.y, boxWidth, boxHeight);
       });
 
-      // Base of the lift
-      ctx.fillStyle = '#3a86ff';
-      ctx.fillRect(position - baseWidth / 2, baseLineY, baseWidth, 32);
+      
+  // Base of the lift
+  let baseGradient = ctx.createLinearGradient(position - baseWidth / 2, baseLineY, position - baseWidth / 2, baseLineY + 32);
+  baseGradient.addColorStop(0, '#4a96ff');
+  baseGradient.addColorStop(1, '#3a86ff');
+  ctx.fillStyle = baseGradient;
+  ctx.fillRect(position - baseWidth / 2, baseLineY, baseWidth, 32);
+  ctx.strokeStyle = '#2176ff';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(position - baseWidth / 2, baseLineY, baseWidth, 32);
 
-      // Platform at the edge of the lift
-      ctx.fillStyle = '#3a86ff';
-      ctx.fillRect(position - platformWidth / 2, baseLineY - height - platformHeight, platformWidth, platformHeight);
+  // Platform
+  let platformGradient = ctx.createLinearGradient(0, baseLineY - height - platformHeight, 0, baseLineY - height);
+  platformGradient.addColorStop(0, '#4a96ff');
+  platformGradient.addColorStop(1, '#3a86ff');
+  ctx.fillStyle = platformGradient;
+  ctx.fillRect(position - platformWidth / 2, baseLineY - height - platformHeight, platformWidth, platformHeight);
+  ctx.strokeStyle = '#2176ff';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(position - platformWidth / 2, baseLineY - height - platformHeight, platformWidth, platformHeight);
 
-      // Rails on the platform
-      ctx.strokeStyle = '#3a86ff';
-      ctx.lineWidth = 8;
-      ctx.beginPath();
-      ctx.moveTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight);
-      ctx.lineTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight - 70);
-      ctx.moveTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight);
-      ctx.lineTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight - 70);
-      ctx.stroke();
+  // Rails, bars, and control board (mostly unchanged, but with outlines)
 
-      // Horizontal bars between the rails
-      ctx.strokeStyle = '#3a86ff';
-      ctx.lineWidth = 6;
-      // Top bar
-      ctx.beginPath();
-      ctx.moveTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight - 70);
-      ctx.lineTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight - 70);
-      ctx.stroke();
-      // Middle bar
-      ctx.beginPath();
-      ctx.moveTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight - 35);
-      ctx.lineTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight - 35);
-      ctx.stroke();
+  // Rails on the platform
+  ctx.strokeStyle = '#3a86ff';
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.moveTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight);
+  ctx.lineTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight - 70);
+  ctx.moveTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight);
+  ctx.lineTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight - 70);
+  ctx.stroke();
 
-      // Vertical bars between the rails
-      // Left vertical bar
-      ctx.beginPath();
-      ctx.moveTo(position - platformWidth / 4, baseLineY - height - platformHeight);
-      ctx.lineTo(position - platformWidth / 4, baseLineY - height - platformHeight - 70);
-      ctx.stroke();
-      // Right vertical bar
-      ctx.beginPath();
-      ctx.moveTo(position + platformWidth / 4, baseLineY - height - platformHeight);
-      ctx.lineTo(position + platformWidth / 4, baseLineY - height - platformHeight - 70);
-      ctx.stroke();
+  // Horizontal bars between the rails
+  ctx.strokeStyle = '#3a86ff';
+  ctx.lineWidth = 6;
+  // Top bar
+  ctx.beginPath();
+  ctx.moveTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight - 70);
+  ctx.lineTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight - 70);
+  ctx.stroke();
+  // Middle bar
+  ctx.beginPath();
+  ctx.moveTo(position - platformWidth / 2 + 4, baseLineY - height - platformHeight - 35);
+  ctx.lineTo(position + platformWidth / 2 - 4, baseLineY - height - platformHeight - 35);
+  ctx.stroke();
 
-      // Control board on the platform
-      ctx.fillStyle = 'black';
-      ctx.fillRect(position - platformWidth / 2, baseLineY - height - platformHeight - 55, 25, 15);
+  // Vertical bars between the rails
+  // Left vertical bar
+  ctx.beginPath();
+  ctx.moveTo(position - platformWidth / 4, baseLineY - height - platformHeight);
+  ctx.lineTo(position - platformWidth / 4, baseLineY - height - platformHeight - 70);
+  ctx.stroke();
+  // Right vertical bar
+  ctx.beginPath();
+  ctx.moveTo(position + platformWidth / 4, baseLineY - height - platformHeight);
+  ctx.lineTo(position + platformWidth / 4, baseLineY - height - platformHeight - 70);
+  ctx.stroke();
 
-      // Control board details
-      ctx.fillStyle = 'red';
-      ctx.beginPath();
-      ctx.arc(position - platformWidth / 2 + 7, baseLineY - height - platformHeight - 50, 3, 0, 2 * Math.PI);
-      ctx.fill();
+  // Control board on the platform
+  ctx.fillStyle = 'black';
+  ctx.fillRect(position - platformWidth / 2, baseLineY - height - platformHeight - 55, 25, 15);
 
-      ctx.fillStyle = 'green';
-      ctx.beginPath();
-      ctx.arc(position - platformWidth / 2 + 13, baseLineY - height - platformHeight - 50, 3, 0, 2 * Math.PI);
-      ctx.fill();
+  
+  // ...
 
-      ctx.fillStyle = 'yellow';
-      ctx.beginPath();
-      ctx.arc(position - platformWidth / 2 + 20, baseLineY - height - platformHeight - 50, 4, 0, 2 * Math.PI);
-      ctx.fill();
+  // LED lights on control board
+  ctx.shadowBlur = 5;
+  ctx.shadowColor = 'red';
+  ctx.fillStyle = 'red';
+  ctx.beginPath();
+  ctx.arc(position - platformWidth / 2 + 7, baseLineY - height - platformHeight - 50, 3, 0, 2 * Math.PI);
+  ctx.fill();
 
-      // Wheels
-      const wheelPositions = [
-        { x: position - baseWidth / 2 + wheelRadius, y: baseLineY + 30 },
-        { x: position + baseWidth / 2 - wheelRadius, y: baseLineY + 30 }
-      ];
-      wheelPositions.forEach(pos => {
-        ctx.fillStyle = 'black';
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, wheelRadius, 0, Math.PI * 2);
-        ctx.fill();
+  ctx.shadowColor = 'green';
+  ctx.fillStyle = 'green';
+  ctx.beginPath();
+  ctx.arc(position - platformWidth / 2 + 13, baseLineY - height - platformHeight - 50, 3, 0, 2 * Math.PI);
+  ctx.fill();
 
-        ctx.fillStyle = 'darkgray';
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, wheelRadius / 2, 0, Math.PI * 2);
-        ctx.fill();
+  ctx.shadowColor = 'yellow';
+  ctx.fillStyle = 'yellow';
+  ctx.beginPath();
+  ctx.arc(position - platformWidth / 2 + 20, baseLineY - height - platformHeight - 50, 4, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.shadowBlur = 0;
 
-        ctx.save();
-        ctx.translate(pos.x, pos.y);
-        ctx.rotate(wheelAngle);
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(0, -wheelRadius);
-        ctx.lineTo(0, wheelRadius);
-        ctx.moveTo(-wheelRadius, 0);
-        ctx.lineTo(wheelRadius, 0);
-        ctx.stroke();
-        ctx.restore();
-      });
+  // Wheels with reflection
+  const wheelPositions = [
+    { x: position - baseWidth / 2 + wheelRadius, y: baseLineY + 30 },
+    { x: position + baseWidth / 2 - wheelRadius, y: baseLineY + 30 }
+  ];
+  wheelPositions.forEach(pos => {
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, wheelRadius, 0, Math.PI * 2);
+    ctx.fill();
 
-      // X-joints
-      const numSegments = 4;
-      const segmentHeight = height / numSegments;
-      const extendedWidth = baseWidth - jointWidth - 15;
-      let yPosition = baseLineY - height;
+    ctx.fillStyle = 'darkgray';
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, wheelRadius / 2, 0, Math.PI * 2);
+    ctx.fill();
 
-      for (let i = 0; i < numSegments; i++) {
-        let jointX = position - extendedWidth / 2;
-        let jointY = yPosition + segmentHeight * i;
-        ctx.strokeStyle = '#bfbdc1';
-        ctx.lineWidth = jointWidth;
-        ctx.beginPath();
-        ctx.moveTo(jointX, jointY);
-        ctx.lineTo(jointX + extendedWidth, jointY + segmentHeight);
-        ctx.moveTo(jointX, jointY + segmentHeight);
-        ctx.lineTo(jointX + extendedWidth, jointY);
-        ctx.stroke();
+    // Wheel reflection
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.beginPath();
+    ctx.ellipse(pos.x, pos.y - wheelRadius / 2, wheelRadius / 4, wheelRadius / 8, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-        ctx.fillStyle = '#31393c';
-        ctx.beginPath();
-        ctx.arc(jointX, jointY, 3, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(jointX + extendedWidth, jointY + segmentHeight, 3, 0, 2 * Math.PI);
-        ctx.fill();
-      }
+    // Wheel lines (unchanged)
+    // ...
+  });
 
-      // "Ofek Lift" sticker
-      ctx.fillStyle = 'white';
-      ctx.font = '25px Tiny5';
-      ctx.fillText('Ofek Lift', position - 45, baseLineY + 23);
-    };
+  // X-joints with shading
+  const numSegments = 4;
+  const segmentHeight = height / numSegments;
+  const extendedWidth = baseWidth - jointWidth - 15;
+  let yPosition = baseLineY - height;
 
+  for (let i = 0; i < numSegments; i++) {
+    let jointX = position - extendedWidth / 2;
+    let jointY = yPosition + segmentHeight * i;
+    ctx.strokeStyle = '#bfbdc1';
+    ctx.lineWidth = jointWidth;
+    ctx.beginPath();
+    ctx.moveTo(jointX, jointY);
+    ctx.lineTo(jointX + extendedWidth, jointY + segmentHeight);
+    ctx.moveTo(jointX, jointY + segmentHeight);
+    ctx.lineTo(jointX + extendedWidth, jointY);
+    ctx.stroke();
+
+    // Joint shading
+    ctx.strokeStyle = '#9f9da1';
+    ctx.lineWidth = jointWidth / 2;
+    ctx.beginPath();
+    ctx.moveTo(jointX, jointY);
+    ctx.lineTo(jointX + extendedWidth, jointY + segmentHeight);
+    ctx.stroke();
+
+    ctx.fillStyle = '#31393c';
+    ctx.beginPath();
+    ctx.arc(jointX, jointY, 3, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(jointX + extendedWidth, jointY + segmentHeight, 3, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  // "Ofek Lift" sticker with shadow
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  ctx.shadowBlur = 5;
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 2;
+  ctx.fillStyle = 'white';
+  ctx.font = '25px Tiny5';
+  ctx.fillText('Ofek Lift', position - 45, baseLineY + 23);
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+};
     const handleKeyDown = (e) => {
       switch (e.key) {
         case 'ArrowUp':

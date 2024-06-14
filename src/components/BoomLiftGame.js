@@ -1,4 +1,3 @@
-// BoomLiftGame.js
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import FontFaceObserver from 'fontfaceobserver';
 import { MovableElementsContext } from './MovableElementsContext';
@@ -13,9 +12,9 @@ function BoomLiftGame() {
   const canvasRef = useRef(null);
   const { elements, setElements } = useContext(MovableElementsContext);
   const [boomLength, setBoomLength] = useState(200);
-  const [boomAngle, setBoomAngle] = useState(45);
+  const [boomAngle, setBoomAngle] = useState(60);
   const [position, setPosition] = useState(window.innerWidth / 2);
-  const maxBoomLength = 400;
+  const maxBoomLength = 800;
   const minBoomLength = 100;
   const [wheelAngle, setWheelAngle] = useState(120);
   const wheelRadius = 20;
@@ -40,7 +39,7 @@ function BoomLiftGame() {
     const drawBoomLift = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw movable items and boxes (same as before)
+      // Draw movable items and boxes
       elements.forEach(item => {
         ctx.fillStyle = item.isLifted ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 0, 255, 0.8)';
         ctx.fillRect(item.x, item.y, boxWidth, boxHeight);
@@ -59,11 +58,11 @@ function BoomLiftGame() {
         ctx.fillRect(box.isPicked ? platformEndX - boxWidth / 2 : box.x, box.isPicked ? platformEndY - platformHeight - boxHeight : box.y, boxWidth, boxHeight);
       });
 
-      // Base of the lift
+      // Draw the lift base
       ctx.fillStyle = '#3a86ff';
       ctx.fillRect(position - baseWidth / 2, baseLineY - baseHeight, baseWidth, baseHeight);
 
-      // Boom
+      // Draw the boom
       ctx.strokeStyle = '#3a86ff';
       ctx.lineWidth = 20;
       ctx.beginPath();
@@ -73,36 +72,26 @@ function BoomLiftGame() {
       ctx.lineTo(boomEndX, boomEndY);
       ctx.stroke();
 
-      // Platform at the end of the boom
+      // Draw the platform at the end of the boom
       ctx.fillStyle = '#3a86ff';
       ctx.save();
       ctx.translate(boomEndX, boomEndY);
-      ctx.rotate(boomAngle * Math.PI / 180);
+      ctx.rotate(((boomAngle - 10) * Math.PI / 100000));  // Stabilize the platform
       ctx.fillRect(-platformWidth / 2, -platformHeight, platformWidth, platformHeight);
 
-      // Control panel on the platform
+      // Draw the control panel on the platform
       ctx.fillStyle = 'black';
       ctx.fillRect(-platformWidth / 2, -platformHeight, 25, 15);
 
-      // Control panel details (same as before)
-      ctx.fillStyle = 'red';
-      ctx.beginPath();
-      ctx.arc(-platformWidth / 2 + 7, -platformHeight + 5, 3, 0, 2 * Math.PI);
-      ctx.fill();
+      // Control panel details
+      drawControlPanel(ctx, -platformWidth / 2, -platformHeight);
 
-      ctx.fillStyle = 'green';
-      ctx.beginPath();
-      ctx.arc(-platformWidth / 2 + 13, -platformHeight + 5, 3, 0, 2 * Math.PI);
-      ctx.fill();
-
-      ctx.fillStyle = 'yellow';
-      ctx.beginPath();
-      ctx.arc(-platformWidth / 2 + 20, -platformHeight + 5, 4, 0, 2 * Math.PI);
-      ctx.fill();
+      // Draw the cage on the platform
+      drawCage(ctx, -platformWidth / 2, -platformHeight, platformWidth, platformHeight);
 
       ctx.restore();
 
-      // Wheels
+      // Draw the wheels
       const wheelPositions = [
         { x: position - baseWidth / 2 + wheelRadius, y: baseLineY },
         { x: position + baseWidth / 2 - wheelRadius, y: baseLineY }
@@ -132,43 +121,77 @@ function BoomLiftGame() {
         ctx.restore();
       });
 
-      // "Ofek Lift" sticker
+      // Draw "Ofek Lift" sticker
       ctx.fillStyle = 'white';
       ctx.font = '25px Tiny5';
       ctx.fillText('Ofek Lift', position - 45, baseLineY - 20);
     };
 
+    const drawControlPanel = (ctx, x, y) => {
+      ctx.fillStyle = 'red';
+      ctx.beginPath();
+      ctx.arc(x + 7, y + 5, 3, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = 'green';
+      ctx.beginPath();
+      ctx.arc(x + 13, y + 5, 3, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = 'yellow';
+      ctx.beginPath();
+      ctx.arc(x + 20, y + 5, 4, 0, 2 * Math.PI);
+      ctx.fill();
+    };
+
+    const drawCage = (ctx, x, y, width, height) => {
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 2;
+
+      // Draw side rails
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x, y - height);
+      ctx.moveTo(x + width, y);
+      ctx.lineTo(x + width, y - height);
+      ctx.stroke();
+
+      // Draw horizontal rails
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + width, y);
+      ctx.moveTo(x, y - height / 2);
+      ctx.lineTo(x + width, y - height / 2);
+      ctx.moveTo(x, y - height);
+      ctx.lineTo(x + width, y - height);
+      ctx.stroke();
+
+      // Draw middle vertical rail
+      ctx.beginPath();
+      ctx.moveTo(x + width / 2, y);
+      ctx.lineTo(x + width / 2, y - height);
+      ctx.stroke();
+    };
+
     const handleKeyDown = (e) => {
       switch (e.key) {
         case 'ArrowUp':
-          if (boomAngle < 80) {
-            setBoomAngle(boomAngle + 5);
-          }
+          setBoomAngle(prev => Math.min(prev + 5, 80));
           break;
         case 'ArrowDown':
-          if (boomAngle > 10) {
-            setBoomAngle(boomAngle - 5);
-          }
+          setBoomAngle(prev => Math.max(prev - 5, 10));
           break;
         case 'ArrowLeft':
-          if (position > window.innerWidth / 6) {
-            setPosition(position - 10);
-          }
+          setPosition(prev => Math.max(prev - 10, window.innerWidth / 6));
           break;
         case 'ArrowRight':
-          if (position < window.innerWidth - window.innerWidth / 6) {
-            setPosition(position + 10);
-          }
+          setPosition(prev => Math.min(prev + 10, window.innerWidth - window.innerWidth / 6));
           break;
-        case 'w':
-          if (boomLength < maxBoomLength) {
-            setBoomLength(boomLength + 10);
-          }
+        case '+':
+          setBoomLength(prev => Math.min(prev + 10, maxBoomLength));
           break;
-        case 's':
-          if (boomLength > minBoomLength) {
-            setBoomLength(boomLength - 10);
-          }
+        case '-':
+          setBoomLength(prev => Math.max(prev - 10, minBoomLength));
           break;
         case ' ':
           handleSpacePress();
@@ -176,11 +199,10 @@ function BoomLiftGame() {
         default:
           break;
       }
-      setWheelAngle(wheelAngle + 0.1);
+      setWheelAngle(prev => prev + 0.1);
     };
 
     const handleSpacePress = () => {
-      // Similar logic as before, but adjusted for boom lift coordinates
       const boomEndX = position + Math.cos(boomAngle * Math.PI / 180) * boomLength;
       const boomEndY = baseLineY - Math.sin(boomAngle * Math.PI / 180) * boomLength;
 
