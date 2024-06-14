@@ -100,8 +100,16 @@ const Products = () => {
   return (
     <Container>
       <Helmet>
-        <title>Products - Ofek Lift Rentals</title>
-        <meta name="description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts." />
+        <title>Products - Ofek Lift Rentals | מוצרים - השכרת מעליות אופק</title>
+        <meta name="description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts. חקרו את מגוון המעליות שלנו להשכרה, כולל במות מספריים, במות זרוע ומלגזות." />
+        <meta name="keywords" content="lift rentals, scissor lifts, boom lifts, forklifts, מחירון במת הרמה, השכרת מעליות, במות מספריים, במות זרוע, מלגזות" />
+        <meta name="author" content="Ofek Lift Rentals | השכרת מעליות אופק" />
+        <meta property="og:title" content="Products - Ofek Lift Rentals | מוצרים - השכרת מעליות אופק" />
+        <meta property="og:description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts. חקרו את מגוון המעליות שלנו להשכרה, כולל במות מספריים, במות זרוע ומלגזות." />
+        <meta property="og:image" content="https://www.ofeklift.com/wp-content/uploads/2023/06/logo.png" />
+        <meta property="og:url" content="https://ofek-lift-order.onrender.com/#/products" />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       <TextField
         label="Search Products"
