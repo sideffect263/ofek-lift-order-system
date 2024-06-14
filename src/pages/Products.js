@@ -27,6 +27,8 @@ const Products = () => {
   const [endDate, setEndDate] = useState(null);
   const [location, setLocation] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [priceRange, setPriceRange] = useState([]);
+  const [textPriceRange, setTextPriceRange] = useState([]);
   const [cart, setCart] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
@@ -48,6 +50,49 @@ const Products = () => {
     );
   }, [searchQuery, products]);
 
+  useEffect(() => {
+    if(calculateDuration() === null) {
+      setPriceRange([]);
+      return;
+    }
+    const duration = calculateDuration();
+    const quantityReducer = (accumulator, currentValue) => accumulator + currentValue.quantity;
+    const shipping = location === 'North' ? 500 : location === 'Middle' ? 1000 : 1500;
+    if(duration < 7) {
+      setPriceRange([500*quantity*duration+shipping, 650*quantity*duration+shipping]);
+    } else if(duration < 30) {
+      setPriceRange([450*quantity*duration+shipping, 600*quantity*duration+shipping]);
+    } else if(duration < 90) {
+      setPriceRange([400*quantity*duration+shipping, 500*quantity*duration+shipping]);
+    }else {
+      setPriceRange([300*quantity*duration+shipping, 380*quantity*duration+shipping]);
+    }
+
+
+
+
+    //clean 
+    if(priceRange[0] == undefined || priceRange[1] == undefined) {
+      setTextPriceRange([
+        '',
+        ''
+       ])
+      return;
+     }
+
+
+     // Format the numbers in the price range so that every third digit is separated by a comma
+     
+      setTextPriceRange([
+        priceRange[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+        priceRange[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       ])
+
+     
+     
+    
+  }, [startDate, endDate, location, quantity]);
+
   const addToCart = (product) => {
     setProductsCartContext([...productsCartContext, product]);
   };
@@ -63,6 +108,8 @@ const Products = () => {
     setEndDate(null);
     setLocation('');
     setQuantity(1);
+    setTextPriceRange([]);
+    setPriceRange([]);
   };
 
   const handleRemoveFromCart = (index) => {
@@ -87,6 +134,7 @@ const Products = () => {
       endDate,
       location,
       quantity,
+      textPriceRange,
     };
     setCart([...cart, item]);
     addToCart(item);
@@ -157,7 +205,7 @@ const Products = () => {
             <>
               <img src={selectedProduct.image} alt={selectedProduct.altText} style={{ width: '100%' }} />
               <Typography variant="body1" component="p">{selectedProduct.description}</Typography>
-              <Typography variant="h6" component="p">Price-Range: ${selectedProduct.price}</Typography>
+              <Typography variant="h6" component="p">Price-Range: {textPriceRange[0]} - {textPriceRange[1]}</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                   <label htmlFor="start-date">Start Date:</label>
