@@ -55,6 +55,7 @@ const Products = () => {
       setPriceRange([]);
       return;
     }
+
     const duration = calculateDuration();
     const quantityReducer = (accumulator, currentValue) => accumulator + currentValue.quantity;
     const shipping = location === 'North' ? 500 : location === 'Middle' ? 1000 : 1500;
@@ -91,7 +92,9 @@ const Products = () => {
      
      
     
-  }, [startDate, endDate, location, quantity]);
+  }, [startDate, endDate, location, quantity, setLocation, ]);
+
+  
 
   const addToCart = (product) => {
     setProductsCartContext([...productsCartContext, product]);
@@ -205,7 +208,7 @@ const Products = () => {
             <>
               <img src={selectedProduct.image} alt={selectedProduct.altText} style={{ width: '100%' }} />
               <Typography variant="body1" component="p">{selectedProduct.description}</Typography>
-              <Typography variant="h6" component="p">Price-Range: {textPriceRange[0]} - {textPriceRange[1]}</Typography>
+              <Typography style={{textAlign:'center'}} variant="h6" component="p">Price-Range: {textPriceRange[0]} - {textPriceRange[1]}</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                   <label htmlFor="start-date">Start Date:</label>
@@ -245,9 +248,9 @@ const Products = () => {
                     onChange={(e) => setLocation(e.target.value)}
                     label="Location"
                   >
-                    <MenuItem value="north">North</MenuItem>
-                    <MenuItem value="middle">Middle</MenuItem>
-                    <MenuItem value="south">South</MenuItem>
+                    <MenuItem value="North">North</MenuItem>
+                    <MenuItem value="Middle">Middle</MenuItem>
+                    <MenuItem value="South">South</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField
