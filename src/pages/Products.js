@@ -33,7 +33,6 @@ const Products = () => {
   const { productsCartContext, setProductsCartContext } = useContext(CartContext);
   const tags = ["זרוע טלסקופית ישרה", "Genie", "JLG", "ממונע", "חשמלי", "פתוח", "שטח מפולס ישר", "זרוע מפרקית", "Manitou", "מייצבים", "אנכית"];
 
-
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     setFilteredProducts(
@@ -43,6 +42,7 @@ const Products = () => {
         product.engType.toLowerCase().includes(lowercasedQuery) ||
         product.workLocation.toLowerCase().includes(lowercasedQuery) ||
         product.brand.toLowerCase().includes(lowercasedQuery) ||
+        product.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery)) ||
         product.workHeight === searchQuery
       )
     );
@@ -99,7 +99,7 @@ const Products = () => {
 
   return (
     <Container>
-       <Helmet>
+      <Helmet>
         <title>Products - Ofek Lift Rentals</title>
         <meta name="description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts." />
       </Helmet>
@@ -130,7 +130,7 @@ const Products = () => {
       </IconButton>
       <Grid container spacing={3} justifyContent="center">
         {filteredProducts.map(product => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
+          <Grid item xs={12} sm={6} md={4} key={product.name}>
             <Button onClick={() => handleProductClick(product)} style={{ width: '100%' }}>
               <ProductCard product={product} />
             </Button>
@@ -147,7 +147,7 @@ const Products = () => {
         <DialogContent>
           {selectedProduct && (
             <>
-              <img src={selectedProduct.image} alt={selectedProduct.name} style={{ width: '100%' }} />
+              <img src={selectedProduct.image} alt={selectedProduct.altText} style={{ width: '100%' }} />
               <Typography variant="body1" component="p">{selectedProduct.description}</Typography>
               <Typography variant="h6" component="p">Price-Range: ${selectedProduct.price}</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
