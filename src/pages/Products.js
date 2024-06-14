@@ -152,7 +152,7 @@ const Products = () => {
             <>
               <img src={selectedProduct.image} alt={selectedProduct.name} style={{ width: '100%' }} />
               <Typography variant="body1" component="p">{selectedProduct.description}</Typography>
-              <Typography variant="h6" component="p">Price: ${selectedProduct.price}</Typography>
+              <Typography variant="h6" component="p">Price-Range: ${selectedProduct.price}</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                   <label htmlFor="start-date">Start Date:</label>
