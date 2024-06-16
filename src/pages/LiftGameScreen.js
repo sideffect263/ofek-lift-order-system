@@ -28,15 +28,12 @@ const LiftGameScreen = () => {
       display:"flex", 
       justifyContent:'center', 
       alignItems:'center',
-      backgroundImage:`url(${lift_game_bg})`, 
-      backgroundRepeat:"no-repeat", 
-      backgroundSize:"cover",
       backgroundPosition:"center",
       maxWidth: "100%",
       flexDirection: 'column',
       zIndex: 10,
     }}>
-      <Button style={{backgroundColor:"rgba(255,255,255,0.6)",marginTop:20, width:"20%"}} onClick={switchGame}>Switch Game</Button> {/* Add a button to switch games */}
+      <Button style={{backgroundColor:"rgba(255,255,255,0.7)", top:'90%', marginTop:20, width:"20%", position:'absolute'}} onClick={switchGame}>Switch Game</Button> {/* Add a button to switch games */}
       {game === 'lift' ? <LiftGame /> : <BoomLiftGame />} {/* Display the correct game based on the state */}
     </Container>
   );
