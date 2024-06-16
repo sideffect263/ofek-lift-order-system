@@ -9,13 +9,16 @@ import ShoppingCartIcon from '../assets/icons/shoppingCart_icon.png';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ProductCard from '../components/ProductCard';
-import axios from 'axios';
 import './products.css';
 import DeleteIcon from '../assets/icons/remove.png';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../components/CartContext';
 import VData from '../components/VData';
 import { Helmet } from 'react-helmet';
+import { db } from '../firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+
+
 
 const Products = () => {
   const [products, setProducts] = useState(VData);
@@ -32,8 +35,32 @@ const Products = () => {
   const [cart, setCart] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+
   const { productsCartContext, setProductsCartContext } = useContext(CartContext);
   const tags = ["זרוע טלסקופית ישרה", "Genie", "JLG", "ממונע", "חשמלי", "פתוח", "שטח מפולס ישר", "זרוע מפרקית", "Manitou", "מייצבים", "אנכית"];
+
+  useEffect(() => {
+    console.log('products:', products);
+
+
+    const fetchData = async () => {
+      console.log('getting data from Firestore');
+
+      try {
+        const querySnapshot = await getDocs(collection(db, 'lifts'));
+        const items = querySnapshot.docs.map(doc => doc.data());
+        setData(items);
+        console.log("success");
+        console.log('data:', items);
+        setProducts(items);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
@@ -151,9 +178,9 @@ const Products = () => {
   return (
     <Container>
       <Helmet>
-        <title>Products - Ofek Lift Rentals | מוצרים - השכרת מעליות אופק</title>
-        <meta name="description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts. חקרו את מגוון המעליות שלנו להשכרה, כולל במות מספריים, במות זרוע ומלגזות." />
-        <meta name="keywords" content="lift rentals, scissor lifts, boom lifts, forklifts, מחירון במת הרמה, השכרת מעליות, במות מספריים, במות זרוע, מלגזות" />
+        <title>Products - Ofek Lift Rentals | מחירון במות הרמה</title>
+        <meta name="description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts. חקרו את מגוון המעליות שלנו להשכרה, כולל במות מספריים, במות זרוע ומלגזות. מחשבון לחישוב עלות במות הרמה" />
+        <meta name="keywords" content="lift rentals, scissor lifts, boom lifts, forklifts, מחירון במת הרמה, השכרת מעליות, במות מספריים, מחשבון, מחירון, עלות במות זרוע, מלגזות" />
         <meta name="author" content="Ofek Lift Rentals | השכרת מעליות אופק" />
         <meta property="og:title" content="Products - Ofek Lift Rentals | מוצרים - השכרת מעליות אופק" />
         <meta property="og:description" content="Explore our wide range of lift equipment available for rent, including scissor lifts, boom lifts, and forklifts. חקרו את מגוון המעליות שלנו להשכרה, כולל במות מספריים, במות זרוע ומלגזות." />
