@@ -53,7 +53,6 @@ const Products = () => {
         setData(items);
         console.log("success");
         console.log('data:', items);
-        setProducts(items);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
