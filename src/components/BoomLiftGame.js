@@ -18,23 +18,34 @@ function BoomLiftGame() {
   const minBoomLength = 100;
   const [wheelAngle, setWheelAngle] = useState(120);
   const wheelRadius = 20;
-  const [boxes, setBoxes] = useState(Array.from({ length: 5 }, (_, i) => ({
-    id: `box-${i + 1}`,
-    x: 250,
-    y: 460 - i * 45,
-    isPicked: false,
-  })));
+  const [boxes, setBoxes] = useState([]);
+  const baseWidth = 200;
+  const baseHeight = 100;
+  const platformWidth = 100;
+  const platformHeight = 50;
+  const baseLineY = 500;
+  const boxWidth = 40;
+  const boxHeight = 40;
+
+  useEffect(() => {
+    // Initialize boxes to cover the entire background
+    const wallBoxes = [];
+    for (let y = 0; y < Math.floor(window.innerHeight / boxHeight); y++) {
+      for (let x = 0; x < Math.floor(window.innerWidth / boxWidth); x++) {
+        wallBoxes.push({
+          id: `box-${y}-${x}`,
+          x: x * boxWidth,
+          y: y * boxHeight,
+          isPicked: false,
+        });
+      }
+    }
+    setBoxes(wallBoxes);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const baseWidth = 200;
-    const baseHeight = 100;
-    const platformWidth = 100;
-    const platformHeight = 50;
-    const baseLineY = 500;
-    const boxWidth = 40;
-    const boxHeight = 40;
 
     const drawBoomLift = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);

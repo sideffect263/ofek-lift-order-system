@@ -17,12 +17,17 @@ function LiftGame() {
   const [height, setHeight] = useState(40);
   const [position, setPosition] = useState(window.innerWidth / 2 - 30);
   const maxHeight = 600;
+  const [objectsCollected, setObjectsCollected] = useState(0);
   const minHeight = 50;
   const [wheelAngle, setWheelAngle] = useState(120);
   const wheelRadius = 15;
   const audioRef = useRef(new Audio(soundTrack)); // Create a reference for the audio element
   const [firstTouch, setFirstTouch] = useState(false);
   const [secondTouch, setSecondTouch] = useState(false);
+  const [goingRightCount, setGoingRightCount] = useState(0);
+  const [objectsChaserMultiplier, setObjectsChaserMultiplier] = useState(4);
+
+  
 
   const [boxes, setBoxes] = useState(Array.from({ length: 5 }, (_, i) => ({
     id: `box-${i + 1}`,
@@ -41,6 +46,12 @@ function LiftGame() {
   const boxWidth = 40;
   const boxHeight = 40;
 
+  const [objects, setObjects] = useState([
+    { x: window.innerWidth - 100, y: baseLineY -200 , radius: 20, isCollected: false, color: 'blue'},
+    { x: window.innerWidth - 200, y: baseLineY -280, radius: 25, isCollected: false, color: 'red'},
+    // Add more objects as needed
+  ]);
+
   useEffect(() => {
 
     
@@ -57,6 +68,8 @@ function LiftGame() {
     const drawLift = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+
+
      
   if (backgroundImg) {
     const backgroundSpeed = 0.001; // Adjust the speed of the background movement
@@ -70,6 +83,19 @@ function LiftGame() {
       ctx.drawImage(backgroundImg, bgX - canvas.width, bgY, canvas.width, canvas.height);
     }
   }
+
+        // Draw objects
+objects.forEach(obj => {
+  if (!obj.isCollected) {
+    console.log("drawing");
+    console.log("obj", obj);
+    ctx.beginPath();
+    ctx.fillStyle = obj.color;
+    ctx.arc((obj.x - goingRightCount*objectsChaserMultiplier), obj.y, obj.radius, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+});
+
 
       // Draw movable items
       elements.forEach(item => {
@@ -251,7 +277,19 @@ function LiftGame() {
       ctx.shadowBlur = 0;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
+
+          // Draw the collected objects count
+          ctx.fillStyle = 'lightblue';
+          
+ctx.fillRect(window.innerWidth/80, window.innerHeight /17, window.innerWidth/4 ,window.innerWidth/15 );
+ctx.fillStyle = 'black';
+ctx.font = '40px Arial';
+ctx.fillText(`Objects Collected: ${objectsCollected}`, window.innerWidth/45, window.innerHeight /7);
+
     };
+
+
+
 
     
     
@@ -357,6 +395,42 @@ useEffect(() => {
 
  
   const moveInterval = setInterval(() => {
+
+    objects.forEach(obj => {
+      console.log("obj", obj);
+      console.log("position", position, platformWidth);
+      console.log("obj.x", obj.x);
+      console.log("obj.y", obj.y);
+      console.log(position + platformWidth / 2 +250, obj.x + obj.radius);
+      console.log(position - platformWidth / 2, obj.x - obj.radius);
+      console.log(baseLineY - height - platformHeight -50, obj.y - obj.radius);
+      console.log(baseLineY + height + platformHeight+100, obj.y + obj.radius);
+
+      if(!obj.isCollected){
+        console.log("obj not collected");
+        console.log(position + platformWidth / 2+250, obj.x - obj.radius, platformWidth);
+        if(position + platformWidth / 2+250 >= obj.x - obj.radius){
+          console.log("good1");
+          if(position - platformWidth / 2 <= obj.x + obj.radius){
+            console.log("good2");
+          }
+        }
+      }
+
+      if (
+        !obj.isCollected &&
+        position + platformWidth / 2+250 >= obj.x - obj.radius &&
+        position - platformWidth / 2 <= obj.x + obj.radius &&
+        baseLineY - height - platformHeight -50 <= obj.y + obj.radius &&
+        baseLineY + height + platformHeight+100 >= obj.y - obj.radius
+      ) {
+        console.log("obj collected");
+        setObjects(objects => objects.map(o => o === obj ? {...o, isCollected: true} : o));
+        setObjectsCollected(objectsCollected + 1);
+      }
+    });
+
+    
     if (isMovingUp && height < maxHeight) {
       setHeight(height + 5);
     }
@@ -377,7 +451,20 @@ useEffect(() => {
       setBackgroundX(prevBackgroundX => (prevBackgroundX - 2) );
 
     }
+
+    if(isMovingRight){
+      setGoingRightCount(goingRightCount + 1);
+
+    }
+
+    if(isMovingLeft || isMovingDown || isMovingUp || isMovingRight){
+
+    }
   }, 10); // Adjust the interval time as needed
+
+
+
+  
 
   document.addEventListener('keydown', handleKeyDown);
   document.addEventListener('keyup', handleKeyUp);
