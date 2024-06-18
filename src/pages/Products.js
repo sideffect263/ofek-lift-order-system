@@ -21,7 +21,7 @@ import { collection, getDocs } from 'firebase/firestore';
 
 
 const Products = () => {
-  const [products, setProducts] = useState(VData);
+  const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -46,6 +46,7 @@ const Products = () => {
 
     const fetchData = async () => {
       console.log('getting data from Firestore');
+      setProducts([]);
 
       try {
         const querySnapshot = await getDocs(collection(db, 'lifts'));
@@ -53,12 +54,20 @@ const Products = () => {
         setData(items);
         console.log("success");
         console.log('data:', items);
+        console.log('data:', items);
+        items.map(item => console.log(item.name));
+        console.log('data:', typeof(data));
+        console.log('data:', data.length);
+        setProducts(items);
+        console.log(products.length);
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
+    console.log('data:', data);
   }, []);
 
   useEffect(() => {
