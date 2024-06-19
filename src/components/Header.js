@@ -30,6 +30,7 @@ const Header = () => {
     { text: 'Home', onClick: homePressed },
     { text: 'Products', onClick: productsPressed },
     { text: 'Order', onClick: orderPressed },
+    { text: 'Lifting Data', onClick: () => navigate('/lifting-data')},
     {text: 'Lift Game', onClick: () => navigate('/lift-game')},
   ];
 

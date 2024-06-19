@@ -5,6 +5,7 @@ import Banner from './components/Banner';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Order from './pages/Order';
+import LiftingData from './pages/LiftingData';
 import LiftGameScreen from './pages/LiftGameScreen';
 import { CartContext } from './components/CartContext';
 import NotFound from './pages/404';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/order" element={<Order />} />
             <Route path="/lift-game" element={<LiftGameScreen />} />
+            <Route path="/lifting-data" element={<LiftingData />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Banner />
