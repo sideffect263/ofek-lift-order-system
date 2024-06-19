@@ -5,6 +5,8 @@ import axios from 'axios';
 import Plot from 'react-plotly.js';
 import { Helmet } from 'react-helmet';
 
+const serverIp = process.env.REACT_APP_BACKEND_RENDER_URL || 'http://localhost:5000';
+
 const LiftingData = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [year, setYear] = useState('2011');
@@ -22,7 +24,8 @@ const LiftingData = () => {
     try {
       console.log('fetching data');
       console.log(year);
-      const response = await axios.get(`http://localhost:5000/data/${year}`);
+      console.log(`${serverIp}/data/${year}`);
+      const response = await axios.get(`${serverIp}data/${year}`);
       setData(response.data);
       setIsLoading(false);
     } catch (error) {
